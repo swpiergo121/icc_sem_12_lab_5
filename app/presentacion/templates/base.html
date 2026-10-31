@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Champions League - Predicciones</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2rem; background: #f4f6fb; }
+    nav a { margin-right: 1rem; }
+    table { border-collapse: collapse; width: 100%; background: #fff; margin-top: 1rem; }
+    th, td { border: 1px solid #ccd; padding: .5rem; text-align: left; }
+    th { background: #1d3a7a; color: #fff; }
+    .ok { color: #0a7a2f; } .error { color: #b00020; }
+    input, select { padding: .3rem; }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="{{ url_for('web.partidos') }}">Partidos</a>
+    <a href="{{ url_for('web.predicciones') }}">Predicciones</a>
+  </nav>
+  {% with mensajes = get_flashed_messages(with_categories=true) %}
+    {% for cat, msg in mensajes %}<p class="{{ cat }}">{{ msg }}</p>{% endfor %}
+  {% endwith %}
+  {% block contenido %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block contenido %}
+<h1>Partidos almacenados ({{ partidos|length }})</h1>
+<table>
+  <tr>
+    <th>Fecha (UTC)</th><th>Fase</th><th>Local</th><th>Visitante</th>
+    <th>Estado</th><th>Resultado</th><th>Predicción</th>
+  </tr>
+  {% for p in partidos %}
+  <tr>
+    <td>{{ p.fecha.strftime('%d/%m/%Y %H:%M') }}</td>
+    <td>{{ p.fase or '-' }}</td>
+    <td>{{ p.equipo_local }}</td>
+    <td>{{ p.equipo_visitante }}</td>
+    <td>{{ p.estado }}</td>
+    <td>{% if p.goles_local is not none %}{{ p.goles_local }} - {{ p.goles_visitante }}{% else %}-{% endif %}</td>
+    <td>
+      <form method="post" action="{{ url_for('web.nueva_prediccion', partido_id=p.id) }}">
+        <select name="ganador">
+          <option value="LOCAL">Gana local</option>
+          <option value="EMPATE">Empate</option>
+          <option value="VISITANTE">Gana visitante</option>
+        </select>
+        <input type="number" name="goles_local" min="0" value="0" style="width:4rem" required>
+        -
+        <input type="number" name="goles_visitante" min="0" value="0" style="width:4rem" required>
+        <button type="submit">Predecir</button>
+      </form>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

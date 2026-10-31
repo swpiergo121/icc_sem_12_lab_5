@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block contenido %}
+<h1>Predicciones registradas ({{ predicciones|length }})</h1>
+<table>
+  <tr>
+    <th>Registrada (UTC)</th><th>Partido</th><th>Ganador</th><th>Marcador estimado</th>
+  </tr>
+  {% for pr in predicciones %}
+  <tr>
+    <td>{{ pr.creado_en.strftime('%d/%m/%Y %H:%M') }}</td>
+    <td>{{ pr.partido.equipo_local }} vs {{ pr.partido.equipo_visitante }}</td>
+    <td>{{ pr.ganador }}</td>
+    <td>{{ pr.goles_local }} - {{ pr.goles_visitante }}</td>
+  </tr>
+  {% else %}
+  <tr><td colspan="4">Aún no hay predicciones.</td></tr>
+  {% endfor %}
+</table>
+{% endblock %}
