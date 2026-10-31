@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block contenido %}
+<h2>{{ c.empresa }}</h2>
+<p>Producto: {{ c.producto }}</p>
+<p>Estado: <strong>{{ c.estado }}</strong></p>
+<img src="{{ url_for('web.foto_original', campana_id=c.id) }}" alt="Foto original" style="max-width:300px">
+
+{% if c.estado in ['GUIONES_PROPUESTOS', 'ERROR'] %}
+  <h3>Elige un guion</h3>
+  <form method="post" action="{{ url_for('web.elegir', campana_id=c.id) }}">
+    {% for g in c.guiones %}
+      <div>
+        <label><input type="radio" name="guion_id" value="{{ g.id }}" required>
+        Opción {{ g.orden }}: {{ g.texto }}</label>
+      </div>
+    {% endfor %}
+    <button type="submit">Generar 3 imágenes con IA</button>
+  </form>
+{% endif %}
+
+{% if c.estado == 'GENERANDO' %}
+  <p>Generando imágenes con IA. Recarga la página en unos minutos.</p>
+{% endif %}
+
+{% if c.estado == 'IMAGENES_LISTAS' %}
+  <h3>Imágenes generadas</h3>
+  {% for m in c.medios if m.tipo == 'imagen' %}
+    <img src="{{ url_for('web.medio', medio_id=m.id) }}" alt="Imagen" style="max-width:240px">
+  {% endfor %}
+{% endif %}
+
+<p><a href="{{ url_for('web.inicio') }}">Volver al inicio</a></p>
+{% endblock %}

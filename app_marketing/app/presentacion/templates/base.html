@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Marketing IA</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2rem; max-width: 960px; }
+    .card { border: 1px solid #ccc; border-radius: 8px; padding: 1rem; margin: 1rem 0; }
+    .ok { color: #0a7a2f; } .error { color: #b00020; }
+    img, video { max-width: 240px; margin: .3rem; }
+  </style>
+</head>
+<body>
+  <h1>Marketing para empresas</h1>
+  {% with mensajes = get_flashed_messages(with_categories=true) %}
+    {% for cat, msg in mensajes %}<p class="{{ cat }}">{{ msg }}</p>{% endfor %}
+  {% endwith %}
+  {% block contenido %}{% endblock %}
+</body>
+</html>

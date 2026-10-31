@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block contenido %}
+<h2>Nueva campaña</h2>
+<form method="post" action="{{ url_for('web.crear') }}" enctype="multipart/form-data">
+  <p><input name="empresa" placeholder="Empresa" required></p>
+  <p><input name="producto" placeholder="Producto o servicio" required></p>
+  <p><input type="file" name="foto" accept=".jpg,.jpeg,.png,.webp" required></p>
+  <button type="submit">Crear campaña</button>
+</form>
+
+<h2>Campañas</h2>
+<ul>
+  {% for c in campanas %}
+    <li><a href="{{ url_for('web.detalle', campana_id=c.id) }}">{{ c.empresa }}</a> ({{ c.estado }})</li>
+  {% else %}<li>Ninguna todavía.</li>{% endfor %}
+</ul>
+{% endblock %}
